@@ -1,0 +1,92 @@
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div >
+            <img src="../../assets/img/bg.jpg" height="620px" width="450px">
+          </div>
+          <div class="col-lg-7" id="content">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+              </div>
+              <form class="user" [formGroup]="registerFrom"  >
+                <div class="form-group row">
+
+                  <!-- First Name -->
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="text" class="form-control form-control-user" name="firstName"
+                    placeholder="First Name" formControlName="firstName">
+                    <div *ngIf="registerFrom.controls.firstName?.invalid && (registerFrom.controls.firstName.dirty || registerFrom.controls.firstName.touched)">
+                      <small *ngIf="registerFrom.controls.firstName.errors.required" class="text-danger">Thông tin chưa được nhập</small>
+                    </div>
+                  </div>
+
+                  <!-- Last Name -->
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-user" name="lastName" 
+                    placeholder="Last Name" formControlName="lastName">
+                    <div *ngIf="registerFrom.controls.lastName.invalid && (registerFrom.controls.lastName.dirty ||registerFrom.controls.lastName.touched)">
+                        <small *ngIf="registerFrom.controls.lastName.errors.required" class="text-danger">Thông tin chưa được nhập</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-user" name="email" 
+                  placeholder="Email Address" formControlName="email">
+                  <div *ngIf="registerFrom.controls.email.invalid && (registerFrom.controls.email.dirty ||registerFrom.controls.email.touched)">
+                    <small *ngIf="registerFrom.controls.email.errors.required" class="text-danger">Thông tin chưa được nhập</small>
+                </div>
+                </div>
+                <div class="form-group row">
+
+                  <!-- Password -->
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" name="password" 
+                    placeholder="Password" formControlName="password">
+                    <div *ngIf="registerFrom.controls.password.invalid && (registerFrom.controls.password.dirty ||registerFrom.controls.password.touched)">
+                        <small *ngIf="registerFrom.controls.password.errors.required" class="text-danger">Thông tin chưa được nhập</small>
+                    </div>
+                  </div>
+
+
+                  <!-- confirm Password -->
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input type="password" class="form-control form-control-user" name="confirmpassword" 
+                    placeholder="confirmpassword" formControlName="confirmpassword">
+                    <div *ngIf="registerFrom.controls.confirmpassword.invalid && (registerFrom.controls.confirmpassword.dirty ||registerFrom.controls.confirmpassword.touched)">
+                        <small *ngIf="registerFrom.controls.confirmpassword.errors.mustMatch" class="text-danger">Confirm Password is not Match.</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!--Button-->
+                <input type="button" class="btn btn-primary btn-user btn-block" value="Create" (click)="Add (registerFrom.value)"/>
+                <hr>
+
+
+                <button class="btn btn-warning btn-user btn-block" (click)="createAccount()">
+                  <i></i> Create Account With Firebase
+                </button>
+
+
+              </form>
+              <hr>
+              <div class="text-center">
+                <a class="small" href="login">Forgot Password?</a>
+              </div>
+              
+              <div class="text-center">
+                <a class="small" href="login">Already have an account? Login!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>

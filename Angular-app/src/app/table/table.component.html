@@ -1,0 +1,172 @@
+
+<div>
+
+<!--Search code-->
+    <form [formGroup]="searchCode">
+      <div class="form-group">
+        <br>
+        <select class="form-control" id="searchCode" (change)="SearchCode(searchCode.value)" formControlName="search_Code">
+          <option value="all">All</option>
+          <option value="casio">CASIO</option>
+          <option value="omega">OMEGA</option>
+          <option value="app">Apple watch</option>
+          <option value="ci">Xiaomi</option>
+          <option value="sam">Samsung</option>
+        </select>
+      </div>
+    </form>
+
+<!--Search NAme-->
+<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" [formGroup]="forSearch">
+  <div class="input-group"  >
+    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" 
+    aria-describedby="basic-addon2" formControlName = "search" [(ngModel)]="searchName" (input) = "inputNull()">
+    
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button" (click) ="Search()">
+        <i class="fas fa-search fa-sm" ></i>
+      </button>
+    </div>
+  </div>
+</form>
+
+
+    <!--Table product-->  
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr style="font-weight: bold; font-family: Arial, Helvetica, sans-serif; color: black;">
+            <th><a (click)="sortAZ()">Code <span>&uarr;</span></a></th>
+            <th><a (click)="sortAZName()">Name<span>&uarr;</span></a></th>
+            <th>Image</th>
+            <th><a (click)="sortNumber19Pri()">Price<span>&uarr;</span></a></th>
+            <th><a (click)="sortNumber19Qua()">Quantity<span>&uarr;</span></a></th>
+            <th>Status</th>
+            <th>#</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container  *ngFor="let product of products ">
+          <tr>
+            <th>
+              {{product.code}}
+            </th>
+            <th>
+              {{product.name}}
+            </th>
+            <th>
+              <img src= {{product.image}} width="50px" height="50px">
+            </th>
+            <th>
+              {{product.price}}
+            </th>
+            <th>
+              {{product.quantity}}
+            </th>
+            <th [style.color]="product.status ? 'green':'red'">
+              {{product.status}}
+            </th>
+
+            <th>
+              <button (click)="Edit($event, product)" class="fa fa-pencil" class="btn btn-outline-warning">Edit</button> 
+              <button (click)="Delete($event, product)"  class="btn btn-outline-danger"><span aria-hidden="true">&times;</span></button> 
+            </th> 
+            <!-- <th>
+              {{product.id}}
+            </th>         -->
+
+          </tr>
+
+          <!--Update form-->
+          <div *ngIf  = "editState && productToEdit.id == product.id">
+            <form [formGroup]="formdata">
+              <br>
+              <h3 style="font-family: Arial, Helvetica, sans-serif;color: black;">Edit Product</h3>
+              
+            <div class="form-group">
+                <label for="code">Code:</label>
+                <input type="text" class="form-control" placeholder="Code" 
+                   name="code" formControlName = "code" [(ngModel)]="product.code" 
+                   [ngClass] = "{'is-invalid': formdata.get('code').touched && formdata.get('code').invalid}">
+                <div *ngIf="formdata.get('code').invalid && 
+                   (formdata.get('code').dirty || formdata.get('code').touched)">
+                   <span style="color:Red" *ngIf="formdata.get('code').errors.required" class="text-danger">Please enter information.</span> 
+                   <span style="color:Red" *ngIf="formdata.get('code').errors.minlength || formdata.get('code').errors.maxlength" class="text-danger">
+                      Code must be minimum 3 and maximum 5characters</span>              
+                </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Name:</label>
+               <input type="text" class="form-control" placeholder="Name"
+                  name="name" formControlName = "name" [(ngModel)]="product.name" width="500px"
+                  [ngClass] = "{'is-invalid': formdata.get('name').touched && formdata.get('name').invalid}">
+                <div *ngIf="formdata.get('name').invalid && 
+                  (formdata.get('name').dirty || formdata.get('name').touched)">
+                     <span style="color:Red" *ngIf="formdata.get('name').errors.required" class="text-danger">Please enter information.</span> 
+                     <span style="color:Red" *ngIf="formdata.get('name').errors.minlength" class="text-danger">
+                     Name product must be minimum 10</span>              
+                </div>
+            </div>
+            
+             <div class="form-group">
+              <label for="price">Price:</label>
+                <input type="number" class="form-control" placeholder="Price"
+                   name="price" formControlName = "price" [(ngModel)]="product.price"
+                   [ngClass] = "{'is-invalid': formdata.get('price').touched && formdata.get('price').invalid}">
+                <div *ngIf="formdata.get('price').invalid && 
+                   (formdata.get('price').dirty || formdata.get('price').touched)">
+                      <span style="color:Red" *ngIf="formdata.get('price').errors.required" class="text-danger">Please enter information.</span>            
+                </div>
+             </div>
+
+             <div class="form-group">
+              <label for="image">Image:</label>
+              <input type="text" class="form-control" placeholder="Image"
+                 name="image" formControlName = "image" [(ngModel)]="product.image"
+                 [ngClass] = "{'is-invalid': formdata.get('price').touched && formdata.get('image').invalid}">
+              <div *ngIf="formdata.get('image').invalid && 
+                 (formdata.get('image').dirty || formdata.get('image').touched)">
+                    <span style="color:Red" *ngIf="formdata.get('image').errors.required" class="text-danger">Please enter information.</span>            
+              </div>
+              <button>Choose Image</button>
+             </div>
+      
+           <div class="form-group">
+            <label for="quantity">Quantity:</label>
+              <input type="number" class="form-control" placeholder="Quantity"
+                 name="quantity" formControlName = "quantity" [(ngModel)]="product.quantity"
+                 [ngClass] = "{'is-invalid': formdata.get('quantity').touched && formdata.get('quantity').invalid}">
+              <div *ngIf="formdata.get('quantity').invalid && 
+                 (formdata.get('quantity').dirty || formdata.get('quantity').touched)">
+                    <span style="color:Red" *ngIf="formdata.get('quantity').errors.required" class="text-danger">Please enter information.</span>            
+              </div>
+
+           </div>
+      
+             <div class="form-group">
+                <div class="form-check">
+                   <input class="form-check-input" type="checkbox" name="status" formControlName = "status" [(ngModel)]="product.status"> 
+                   <label class="form-check-label" for="status">
+                   Status
+                   </label>
+                </div>
+             </div>
+
+             <button type="submit" class="fa fa-pencil" name="addProduct" (click)="Update(formdata.value,product)" class="btn btn-outline-success">
+               Update Product
+             </button>
+             
+             <button (click)="Delete($event, product)"  class="btn btn-outline-danger ">Delete</button> 
+             <button (click)="clearState()" class="btn btn-outline-secondary">Close</button>  
+             <br>
+          </form>
+       </div>
+      </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

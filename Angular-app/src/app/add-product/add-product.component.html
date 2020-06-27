@@ -1,0 +1,98 @@
+<div class="container-fluid mt-3">
+    <h4 class="mb-2">ADD PRODUCT</h4>
+    <form [formGroup]="formdata">
+       <!-- code product -->
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control"
+               name="code" placeholder="CASIO123..." formControlName="code" 
+               [ngClass] = "{'is-invalid': formdata.get('code').touched && formdata.get('code').invalid}">
+               <div *ngIf="formdata.get('code').invalid && 
+                  (formdata.get('code').dirty || formdata.get('code').touched)">
+                  <span style="color:Red" *ngIf="formdata.get('code').errors.required" class="text-danger">Please enter information.</span> 
+                  <span style="color:Red" *ngIf="formdata.get('code').errors.minlength || formdata.get('code').errors.maxlength" class="text-danger">
+                     Code must be minimum 3 and maximum 10 characters</span>              
+               </div>
+               
+                  <!-- <span style="color:Red" ng-show="personForm.pincode.$dirty&&personForm.pincode.$error.pattern">
+                     Only Numbers Allowed, Maximum 5 Characters</span> -->
+ 
+               <!-- <p>{{formdata.controls.code.value.toString().length}}</p> -->
+               <!-- <span ng-show="formdata.code.$invalid" class="error-msg">
+                  Password must be minimum 5 and maximum 10 characters
+             </span> -->
+        </div>
+
+        <!-- Name Product -->
+      <div class="form-group">
+         <label for="name">Name Product</label>
+         <input type="text" class="form-control"
+            name="name" placeholder="Name Product" formControlName = "name"
+            [ngClass] = "{'is-invalid': formdata.get('name').touched && formdata.get('name').invalid}">
+            <div *ngIf="formdata.get('name').invalid && 
+            (formdata.get('name').dirty || formdata.get('name').touched)">
+               <span style="color:Red" *ngIf="formdata.get('name').errors.required" class="text-danger">Please enter information.</span> 
+               <span style="color:Red" *ngIf="formdata.get('name').errors.minlength" class="text-danger">
+               Name product must be minimum 10</span>              
+            </div>
+      </div>
+
+      <!--Price Product-->
+       <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" class="form-control"
+             name="price" placeholder="1000000..." formControlName = "price"
+             [ngClass] = "{'is-invalid': formdata.get('price').touched && formdata.get('price').invalid}">
+             <div *ngIf="formdata.get('price').invalid && 
+             (formdata.get('price').dirty || formdata.get('price').touched)">
+                <span style="color:Red" *ngIf="formdata.get('price').errors.required" class="text-danger">Please enter information.</span>            
+             </div>
+       </div>
+
+      <!--Image Product-->
+      <div class="form-group">
+        <label for="image">image</label>
+        <input type="text" class="form-control"
+           name="image" formControlName = "image" 
+           [ngClass] = "{'is-invalid': formdata.get('price').touched && formdata.get('image').invalid}">
+           <div *ngIf="formdata.get('image').invalid && 
+           (formdata.get('image').dirty || formdata.get('image').touched)">
+              <span style="color:Red" *ngIf="formdata.get('image').errors.required" class="text-danger">Please enter information.</span>            
+           </div>
+     </div>
+
+      <!--Quantity Product-->
+     <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control"
+           name="quantity" placeholder="10..." formControlName = "quantity"
+           [ngClass] = "{'is-invalid': formdata.get('quantity').touched && formdata.get('quantity').invalid}">
+           <div *ngIf="formdata.get('quantity').invalid && 
+           (formdata.get('quantity').dirty || formdata.get('quantity').touched)">
+              <span style="color:Red" *ngIf="formdata.get('quantity').errors.required" class="text-danger">Please enter information.</span>            
+           </div>
+     </div>
+
+     <!--Status Product-->
+       <div class="form-group">
+          <div class="form-check">
+             <input class="form-check-input" type="checkbox" name="status" formControlName = "status">
+             <label class="form-check-label" for="status">
+             Status
+             </label>
+          </div>
+       </div>
+
+      <!--ADD-->
+      <div>
+         <button type="submit" class="btn btn-primary" id="addProduct" (click)="Add(formdata.value)">ADD</button>
+      </div>
+
+   </form>
+ </div>
+
+ <!--Back-->
+ <div>  <a class="nav-link" href="main/table" style="text-align: right">
+   <span>BACK</span></a>
+</div>
+
